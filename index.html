@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ru" data-era="vera">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Северная звезда</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Кооперативная головоломка для двух Android-телефонов. Двое в одном вагоне с разницей в 25 лет: у вас есть только голос и служебный телефон.">
+<meta property="og:title" content="Северная звезда">
+<meta property="og:description" content="Двое в одном вагоне с разницей в 25 лет. Вы не видите мир друг друга — у вас есть только голос и служебный телефон.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ssandrezz.github.io/severnaya-zvezda/">
+<meta property="og:image" content="https://ssandrezz.github.io/severnaya-zvezda/img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0d12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Prata&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-handset" viewBox="0 0 64 64"><path d="M10 25c0-8 6-13 14-13h16c8 0 14 5 14 13v3H44v-4c0-3-2-5-5-5H25c-3 0-5 2-5 5v4H10z"/><rect x="7" y="25" width="16" height="10" rx="4"/><rect x="41" y="25" width="16" height="10" rx="4"/><path d="M21 38h22l7 16H14z"/></symbol>
+    <symbol id="i-loco" viewBox="0 0 64 40"><path d="M6 30V18h22V8h-6V4h18v4h-4v10h12l8 6v6z"/><rect x="10" y="10" width="7" height="8"/><circle cx="16" cy="33" r="5"/><circle cx="32" cy="33" r="5"/><circle cx="48" cy="33" r="5"/></symbol>
+    <symbol id="i-lantern" viewBox="0 0 40 64"><path d="M14 4h12v4h4l-2 6H12l-2-6h4z"/><path d="M10 16h20l-2 34H12z" fill-opacity=".35"/><path d="M10 16h20l-2 34H12zM14 50h12v6H14z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="20" cy="33" r="5"/></symbol>
+    <symbol id="i-key" viewBox="0 0 64 32"><circle cx="14" cy="16" r="10" fill="none" stroke="currentColor" stroke-width="4"/><path d="M24 14h36v4h-4v8h-4v-8h-6v6h-4v-6H24z"/></symbol>
+    <symbol id="i-star" viewBox="-10 -10 20 20"><path d="M0-10 1.4-1.4 10 0 1.4 1.4 0 10-1.4 1.4-10 0-1.4-1.4z"/></symbol>
+  </defs>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="bar" aria-label="Разделы">
+  <a class="bar__logo" href="#top"><svg><use href="#i-star"/></svg>Северная звезда</a>
+  <div class="bar__links">
+    <a href="#story">Завязка</a><a href="#eras">Эпохи</a><a href="#kupe">Купе</a><a href="#how">Как играют</a><a href="#gallery">Кадры</a>
+  </div>
+  <div class="bar__tools">
+    <div class="era-switch" role="radiogroup" aria-label="Чью эпоху показать">
+      <button type="button" role="radio" aria-checked="true" data-era="vera"><b>1913</b><span>Вера</span></button>
+      <button type="button" role="radio" aria-checked="false" data-era="alexey"><b>1938</b><span>Алексей</span></button>
+    </div>
+    <button type="button" class="sound" aria-pressed="true" aria-label="Звук включён">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="sound__waves" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hook" id="top" style="--split: 50%">
+  <img class="hook__img hook__img--b" src="img/era-1938-kupe.jpg" alt="То же купе в 1938 году: иней, снег, ржавый титан" width="1600" height="900" fetchpriority="high">
+  <img class="hook__img hook__img--a" src="img/era-1913-kupe.jpg" alt="Служебное купе в 1913 году: тёплый свет лампы, медный титан" width="1600" height="900" fetchpriority="high">
+  <div class="hook__shade" aria-hidden="true"></div>
+  <canvas class="hook__snow" aria-hidden="true"></canvas>
+
+  <div class="hook__line" aria-hidden="true"></div>
+
+  <div class="hook__text wrap">
+    <p class="eyebrow">Кооперативная головоломка для двух телефонов</p>
+    <h1 class="hook__title">Северная звезда</h1>
+    <p class="hook__lead">Двое в&nbsp;одном вагоне с&nbsp;разницей в&nbsp;25&nbsp;лет. Вы не&nbsp;видите мир друг друга&nbsp;— у&nbsp;вас есть только голос и&nbsp;служебный телефон.</p>
+  </div>
+
+  <div class="hook__phone">
+    <button type="button" class="callbtn" aria-describedby="call-hint">
+      <span class="callbtn__ring" aria-hidden="true"></span><span class="callbtn__ring" aria-hidden="true"></span>
+      <svg aria-hidden="true"><use href="#i-handset"/></svg>
+      <span class="callbtn__label">Снять трубку</span>
+    </button>
+    <p class="hook__hint" id="call-hint">Звонит служебный телефон</p>
+  </div>
+
+  <div class="subs" aria-live="polite">
+    <p class="subs__line"><span class="subs__who">Ведите по&nbsp;экрану, чтобы заглянуть в&nbsp;другую эпоху.</span></p>
+  </div>
+
+  <span class="hook__tag hook__tag--a">1913 · Вера</span>
+  <span class="hook__tag hook__tag--b">1938 · Алексей</span>
+  <a class="hook__down" href="#story" aria-label="К описанию игры"><span></span></a>
+</header>
+
+<section class="night" aria-hidden="true">
+  <svg class="forest" viewBox="0 0 1600 160" preserveAspectRatio="xMidYMax slice">
+    <defs>
+      <symbol id="spruce" viewBox="0 0 40 100"><path d="M20 0 L28 22 L24 22 L33 44 L27 44 L38 70 L30 70 L40 92 L22 92 L22 100 L18 100 L18 92 L0 92 L10 70 L2 70 L13 44 L7 44 L16 22 L12 22Z"/></symbol>
+    </defs>
+    <g class="forest__far">
+      <use href="#spruce" x="0" y="40" width="34" height="90"/><use href="#spruce" x="40" y="54" width="28" height="76"/><use href="#spruce" x="120" y="30" width="40" height="100"/><use href="#spruce" x="170" y="60" width="26" height="70"/><use href="#spruce" x="300" y="44" width="32" height="86"/><use href="#spruce" x="340" y="24" width="42" height="106"/><use href="#spruce" x="520" y="50" width="30" height="80"/><use href="#spruce" x="560" y="36" width="36" height="94"/><use href="#spruce" x="760" y="56" width="28" height="74"/><use href="#spruce" x="800" y="30" width="40" height="100"/><use href="#spruce" x="980" y="46" width="32" height="84"/><use href="#spruce" x="1030" y="62" width="24" height="68"/><use href="#spruce" x="1180" y="28" width="42" height="102"/><use href="#spruce" x="1230" y="52" width="30" height="78"/><use href="#spruce" x="1400" y="40" width="34" height="90"/><use href="#spruce" x="1450" y="20" width="44" height="110"/><use href="#spruce" x="1540" y="50" width="30" height="80"/>
+    </g>
+    <g class="forest__near">
+      <use href="#spruce" x="60" y="10" width="50" height="130"/><use href="#spruce" x="230" y="34" width="40" height="106"/><use href="#spruce" x="430" y="0" width="56" height="140"/><use href="#spruce" x="650" y="30" width="42" height="110"/><use href="#spruce" x="900" y="6" width="54" height="134"/><use href="#spruce" x="1110" y="36" width="40" height="104"/><use href="#spruce" x="1320" y="4" width="54" height="136"/><use href="#spruce" x="1500" y="30" width="44" height="110"/>
+    </g>
+    <rect class="forest__snow" x="0" y="138" width="1600" height="22"/>
+  </svg>
+  <svg class="night__star" viewBox="-10 -10 20 20"><use href="#i-star"/></svg>
+  <div class="track">
+    <svg class="train" viewBox="0 0 1080 86" overflow="visible">
+      <defs><linearGradient id="beam" x1="1" x2="0"><stop offset="0" stop-color="#ffe7a8" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7a8" stop-opacity="0"/></linearGradient></defs>
+      <polygon class="train__beam" points="22,44 -420,10 -420,84" fill="url(#beam)"/>
+      <g class="train__body">
+        <path d="M14 74 L30 62 L30 74Z"/><rect x="30" y="34" width="122" height="30" rx="13"/><rect x="48" y="14" width="15" height="22" rx="2"/><rect x="44" y="11" width="23" height="6" rx="2"/><rect x="94" y="25" width="20" height="11" rx="5"/><rect x="146" y="13" width="60" height="7" rx="3"/><rect x="150" y="18" width="52" height="46"/><rect x="26" y="62" width="182" height="6"/>
+        <circle cx="58" cy="72" r="9"/><circle cx="86" cy="72" r="9"/><circle cx="114" cy="72" r="9"/><circle cx="150" cy="72" r="10"/><circle cx="182" cy="72" r="10"/>
+        <rect x="212" y="30" width="70" height="36" rx="3"/><circle cx="228" cy="73" r="7"/><circle cx="266" cy="73" r="7"/><rect x="282" y="58" width="10" height="4"/>
+        <g id="car"><rect x="292" y="14" width="190" height="9" rx="4"/><rect x="294" y="20" width="186" height="46" rx="3"/><circle cx="320" cy="73" r="7"/><circle cx="340" cy="73" r="7"/><circle cx="434" cy="73" r="7"/><circle cx="454" cy="73" r="7"/><rect x="482" y="58" width="8" height="4"/></g>
+        <use href="#car" x="198"/><use href="#car" x="396"/><use href="#car" x="594"/>
+      </g>
+      <g class="train__lights">
+        <circle cx="24" cy="44" r="3.5"/><rect x="162" y="26" width="14" height="12" rx="1"/>
+        <g id="carWin"><rect x="306" y="30" width="15" height="14" rx="2"/><rect x="331" y="30" width="15" height="14" rx="2"/><rect x="356" y="30" width="15" height="14" rx="2" class="dim"/><rect x="381" y="30" width="15" height="14" rx="2"/><rect x="406" y="30" width="15" height="14" rx="2"/><rect x="431" y="30" width="15" height="14" rx="2" class="dim"/><rect x="456" y="30" width="15" height="14" rx="2"/></g>
+        <use href="#carWin" x="198"/><use href="#carWin" x="396"/><use href="#carWin" x="594"/>
+      </g>
+    </svg>
+  </div>
+  <div class="rails"></div>
+</section>
+
+<main>
+
+  <section class="board-band" aria-label="Коротко об игре">
+    <div class="wrap">
+      <div class="board">
+        <div class="board__head"><svg><use href="#i-loco"/></svg><span>Отправление</span><span class="board__route">Ночной экспресс «Северная звезда»</span></div>
+        <dl class="board__grid">
+          <div class="board__cell"><dt>Глав</dt><dd><span class="flap" data-flap="12">12</span><small>и эпилог</small></dd></div>
+          <div class="board__cell"><dt>В пути</dt><dd><span class="flap" data-flap="6–8">6–8</span><small>часов на пару</small></dd></div>
+          <div class="board__cell"><dt>Пассажиров</dt><dd><span class="flap" data-flap="2">2</span><small>у каждого свой телефон</small></dd></div>
+          <div class="board__cell"><dt>Глава</dt><dd><span class="flap" data-flap="30–40">30–40</span><small>минут</small></dd></div>
+          <div class="board__cell"><dt>Платформа</dt><dd><span class="flap flap--word" data-flap="ANDROID">ANDROID</span><small>русский язык</small></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="story" id="story">
+    <div class="wrap story__grid">
+      <article class="paper frame" data-reveal>
+        <p class="eyebrow"><span class="num">I</span>Завязка</p>
+        <h2>Ночной экспресс «Северная звезда»</h2>
+        <p class="dropcap">Вера едет в&nbsp;этом поезде в&nbsp;1913&nbsp;году. Алексей едет в&nbsp;том&nbsp;же вагоне в&nbsp;1938-м. Их&nbsp;разделяют двадцать пять лет, а&nbsp;связь одна&nbsp;— служебный телефон вагона.</p>
+        <p>Это мистико-детективная история. Находки двигают сюжет, и&nbsp;к&nbsp;финалу игроки сами складывают, что произошло.</p>
+        <svg class="stamp" viewBox="0 0 160 160" aria-hidden="true">
+          <defs><path id="stampCircle" d="M80 80m-58 0a58 58 0 1 1 116 0a58 58 0 1 1-116 0"/></defs>
+          <circle cx="80" cy="80" r="74" fill="none" stroke-width="4"/>
+          <circle cx="80" cy="80" r="46" fill="none" stroke-width="2"/>
+          <text font-size="15" letter-spacing="3"><textPath href="#stampCircle">СЛУЖЕБНАЯ ЛИНИЯ · ВАГОН ·</textPath></text>
+          <text x="80" y="76" text-anchor="middle" font-size="18">1913</text>
+          <text x="80" y="98" text-anchor="middle" font-size="18">1938</text>
+        </svg>
+      </article>
+
+      <div class="route" data-reveal aria-label="Вера в 1913 году, Алексей в 1938 году, между ними 25 лет">
+        <div class="route__stop route__stop--vera"><span class="route__year">1913</span><span class="route__name">Вера</span></div>
+        <div class="route__line" aria-hidden="true"><span class="route__gap">25 лет</span><svg class="route__loco"><use href="#i-loco"/></svg></div>
+        <div class="route__stop route__stop--alexey"><span class="route__year">1938</span><span class="route__name">Алексей</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="eras" id="eras">
+    <div class="wrap">
+      <div class="eras__head">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow"><span class="num">II</span>Две эпохи</p>
+          <h2>Один вагон, двадцать пять лет спустя</h2>
+          <p>Тот&nbsp;же угол, та&nbsp;же лампа на&nbsp;столике. Что меняется в&nbsp;одной эпохе, отзывается в&nbsp;другой. Тяните ручку или нажмите на&nbsp;часы.</p>
+        </div>
+        <button type="button" class="watch" data-reveal aria-label="Переключить эпоху: сейчас 1913 год">
+          <svg viewBox="0 0 200 240" aria-hidden="true">
+            <defs>
+              <radialGradient id="watchCase" cx=".35" cy=".3"><stop offset="0" stop-color="#f3d998"/><stop offset=".55" stop-color="#c9a35b"/><stop offset="1" stop-color="#6e5326"/></radialGradient>
+              <radialGradient id="watchDial" cx=".4" cy=".35"><stop offset="0" stop-color="#fbf3df"/><stop offset="1" stop-color="#d9c9a3"/></radialGradient>
+            </defs>
+            <circle cx="100" cy="16" r="13" fill="none" stroke="url(#watchCase)" stroke-width="6"/>
+            <rect x="88" y="26" width="24" height="18" rx="4" fill="url(#watchCase)"/>
+            <circle cx="100" cy="140" r="92" fill="url(#watchCase)"/>
+            <circle cx="100" cy="140" r="80" fill="url(#watchDial)"/>
+            <g class="watch__ticks"></g>
+            <rect x="74" y="164" width="52" height="22" rx="3" fill="#1b1610"/>
+            <text class="watch__year" x="100" y="181" text-anchor="middle">1913</text>
+            <g class="watch__hands">
+              <line class="watch__h" x1="100" y1="140" x2="100" y2="96" stroke-width="6"/>
+              <line class="watch__m" x1="100" y1="140" x2="100" y2="76" stroke-width="3.5"/>
+              <circle cx="100" cy="140" r="6"/>
+            </g>
+          </svg>
+          <span class="watch__label">Нажмите, чтобы перевести стрелки</span>
+        </button>
+      </div>
+
+      <div class="compare frame" data-reveal>
+        <div class="compare__tabs" role="tablist" aria-label="Выбор ракурса">
+          <button type="button" role="tab" id="tab-kupe" aria-selected="true" data-a="img/era-1913-kupe.jpg" data-b="img/era-1938-kupe.jpg">Служебное купе</button>
+          <button type="button" role="tab" id="tab-dver" aria-selected="false" data-a="img/era-1913-dver.jpg" data-b="img/era-1938-dver.jpg">От двери</button>
+          <button type="button" role="tab" id="tab-vagon" aria-selected="false" data-a="img/era-1913-vagon.jpg" data-b="img/era-1938-vagon.jpg">Пассажирское купе</button>
+        </div>
+        <div class="compare__stage" style="--pos: 50%">
+          <img class="compare__img compare__img--b" src="img/era-1938-kupe.jpg" alt="Служебное купе в 1938 году: иней, ржавый титан, снег на диване" width="1600" height="900" loading="lazy">
+          <img class="compare__img compare__img--a" src="img/era-1913-kupe.jpg" alt="Служебное купе в 1913 году: тёплый свет, медный титан" width="1600" height="900" loading="lazy">
+          <span class="compare__tag compare__tag--a">1913 · Вера</span>
+          <span class="compare__tag compare__tag--b">1938 · Алексей</span>
+          <span class="compare__handle" aria-hidden="true"><span class="compare__knob"></span></span>
+          <input class="compare__range" id="era-range" type="range" min="0" max="100" value="50" aria-label="Граница между 1913 и 1938 годом">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="kupe" id="kupe">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><span class="num">III</span>Осмотритесь</p>
+        <h2>Купе, которое можно покрутить</h2>
+        <p>Потяните кадр влево или вправо, чтобы повернуться на&nbsp;месте. На&nbsp;клавиатуре работают стрелки.</p>
+      </div>
+      <div class="spin frame" data-reveal>
+        <div class="spin__stage" tabindex="0" role="slider" aria-label="Поворот по купе" aria-valuemin="0" aria-valuemax="345" aria-valuenow="0" aria-valuetext="0 градусов, окно">
+          <img class="spin__img spin__img--back" src="img/kupe360/k00.jpg" alt="" width="960" height="540" loading="lazy">
+          <img class="spin__img spin__img--front" src="img/kupe360/k00.jpg" alt="Купе ночного экспресса изнутри" width="960" height="540" loading="lazy">
+          <div class="spin__hint" aria-hidden="true"><svg viewBox="0 0 64 32"><path d="M4 16h56M4 16l10-8M4 16l10 8M60 16l-10-8M60 16l-10 8"/></svg><span>Потяните</span></div>
+          <div class="spin__compass" aria-hidden="true"><svg viewBox="-30 -30 60 60"><circle r="27"/><path class="spin__needle" d="M0-22 5 0 0 22-5 0z"/><text y="-12" text-anchor="middle">О</text></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><span class="num">IV</span>Как играют</p>
+        <h2>Два телефона, голос и&nbsp;один провод через время</h2>
+        <p>У&nbsp;каждого на&nbsp;телефоне свой мир. Экраны показывать нельзя.</p>
+      </div>
+
+      <div class="phones" data-reveal>
+        <figure class="phone phone--vera">
+          <div class="phone__body"><img src="img/phone-vera.jpg" alt="Экран Веры: купе 1913 года с кнопками журнала, подсказок и настроек" width="1200" height="675" loading="lazy"></div>
+          <figcaption><span class="phone__year">1913</span> Экран Веры</figcaption>
+        </figure>
+        <div class="line" aria-hidden="true">
+          <svg viewBox="0 0 120 60" class="line__wire"><path d="M0 30 C 20 6, 40 54, 60 30 S 100 6, 120 30"/></svg>
+          <svg class="line__handset"><use href="#i-handset"/></svg>
+          <span class="line__label">голос</span>
+        </div>
+        <figure class="phone phone--alexey">
+          <div class="phone__body"><img src="img/phone-alexey.jpg" alt="Экран Алексея: то же купе в 1938 году, иней и снег" width="1200" height="675" loading="lazy"></div>
+          <figcaption><span class="phone__year">1938</span> Экран Алексея</figcaption>
+        </figure>
+      </div>
+
+      <div class="steps">
+        <div class="step" data-reveal><svg><use href="#i-lantern"/></svg><h3>Свой экран</h3><p>Вера видит 1913 год, Алексей&nbsp;— 1938-й. Показывать экран партнёру нельзя, даже если он сидит рядом.</p></div>
+        <div class="step" data-reveal><svg><use href="#i-handset"/></svg><h3>Голос</h3><p>Один видит то, чего не&nbsp;хватает другому. Загадки решают вслух, описывая увиденное.</p></div>
+        <div class="step" data-reveal><svg><use href="#i-key"/></svg><h3>Служебный телефон</h3><p>Единственная связь между эпохами. Что меняется в&nbsp;одном времени, отзывается в&nbsp;другом.</p></div>
+      </div>
+
+      <div class="relic" data-reveal>
+        <figure class="frame frame--sm"><img src="img/telefon-1913.jpg" alt="Служебный телефон на стене купе, 1913 год" width="1200" height="675" loading="lazy"><figcaption>Служебный телефон, 1913</figcaption></figure>
+        <figure class="frame frame--sm"><img src="img/telefon-1938.jpg" alt="Тот же служебный телефон, 1938 год" width="1200" height="675" loading="lazy"><figcaption>Тот же аппарат, 1938</figcaption></figure>
+      </div>
+      <p class="how__net" data-reveal>Телефоны соединяются по&nbsp;одной Wi-Fi-сети или через раздачу с&nbsp;телефона.</p>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="plate-sec" id="plate">
+    <div class="wrap plate-sec__grid">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><span class="num">V</span>Пока поезд стоит</p>
+        <h2>Табличку вагона перепутали</h2>
+        <p>Буквы на&nbsp;латунной табличке сняли и&nbsp;повесили как попало. Нажмите на&nbsp;две буквы, чтобы поменять их&nbsp;местами, и&nbsp;верните вагону имя. Эта загадка только для сайта, в&nbsp;игре её&nbsp;нет.</p>
+      </div>
+      <div class="plate-wrap" data-reveal>
+        <div class="plate" role="group" aria-label="Табличка вагона из перепутанных букв">
+          <span class="plate__screw plate__screw--tl"></span><span class="plate__screw plate__screw--tr"></span><span class="plate__screw plate__screw--bl"></span><span class="plate__screw plate__screw--br"></span>
+          <div class="plate__words"></div>
+        </div>
+        <div class="plate__bar">
+          <span class="plate__moves" aria-live="polite">Ходов: 0</span>
+          <button type="button" class="plate__reset">Перемешать</button>
+        </div>
+        <p class="plate__done" hidden>Табличка на&nbsp;месте. «Северная звезда» отправляется!</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><span class="num">VI</span>Что в игре</p>
+        <h2>Вечер в&nbsp;купе, растянутый на&nbsp;двенадцать глав</h2>
+        <p>Нажмите на&nbsp;карточку, чтобы перевернуть её.</p>
+      </div>
+      <ul class="cards">
+        <li data-reveal><button type="button" class="card" aria-pressed="false"><span class="card__face card__front"><svg viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="18" rx="3"/><path d="M5 13h22M11 7v18"/></svg><b>12 глав и эпилог</b><i>перевернуть</i></span><span class="card__face card__back">Каждая глава на&nbsp;30–40 минут. Вся игра занимает около 6–8 часов на&nbsp;пару.</span></button></li>
+        <li data-reveal><button type="button" class="card" aria-pressed="false"><span class="card__face card__front"><svg viewBox="0 0 32 32"><path d="M16 4v4M10 12h12l-2 10h-8z"/><path d="M12 26h8"/><circle cx="16" cy="17" r="2"/></svg><b>Реалистичная 3D-графика</b><i>перевернуть</i></span><span class="card__face card__back">Тёмные купе, свет ламп, иней на&nbsp;стекле и&nbsp;снег за&nbsp;окном.</span></button></li>
+        <li data-reveal><button type="button" class="card" aria-pressed="false"><span class="card__face card__front"><svg viewBox="0 0 32 32"><rect x="7" y="12" width="18" height="13" rx="2"/><path d="M7 12l3-5h12l3 5M16 16v4"/></svg><b>Предметы в&nbsp;руках</b><i>перевернуть</i></span><span class="card__face card__back">Находки можно крутить, открывать и&nbsp;разглядывать со&nbsp;всех сторон.</span></button></li>
+        <li data-reveal><button type="button" class="card" aria-pressed="false"><span class="card__face card__front"><svg viewBox="0 0 32 32"><circle cx="11" cy="11" r="5"/><circle cx="22" cy="21" r="5"/><path d="M15 15l3 3"/></svg><b>Новые механики в&nbsp;каждой главе</b><i>перевернуть</i></span><span class="card__face card__back">Каждая глава приносит свои устройства и&nbsp;свой способ договориться.</span></button></li>
+        <li data-reveal><button type="button" class="card" aria-pressed="false"><span class="card__face card__front"><svg viewBox="0 0 32 32"><path d="M16 5a8 8 0 0 0-5 14v3h10v-3a8 8 0 0 0-5-14zM12 26h8"/></svg><b>Подсказки в&nbsp;четыре уровня</b><i>перевернуть</i></span><span class="card__face card__back">Открываются по&nbsp;одной, когда пара застряла.<span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span></button></li>
+        <li data-reveal><button type="button" class="card" aria-pressed="false"><span class="card__face card__front"><svg viewBox="0 0 32 32"><path d="M8 5h13l4 4v18H8z"/><path d="M12 5v7h8V5M12 27v-8h9v8"/></svg><b>Сохранение прогресса</b><i>перевернуть</i></span><span class="card__face card__back">Можно остановиться на&nbsp;любой главе и&nbsp;продолжить в&nbsp;другой вечер.</span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><span class="num">VII</span>Кадры из игры</p>
+        <h2>Первые главы</h2>
+        <p>Нажмите на&nbsp;кадр, чтобы увеличить. Переключатель эпохи вверху подсвечивает её&nbsp;кадры.</p>
+      </div>
+      <ul class="shots">
+        <li class="shots__wide" data-era="vera" data-reveal><button type="button" data-full="img/lampa-1913.jpg"><img src="img/lampa-1913.jpg" alt="Настольная лампа с розами, 1913" width="1600" height="900" loading="lazy"><span>Лампа на столике, 1913</span></button></li>
+        <li data-era="alexey" data-reveal><button type="button" data-full="img/lampa-1938.jpg"><img src="img/lampa-1938.jpg" alt="Та же лампа в 1938 году, на подоконнике снег" width="1600" height="900" loading="lazy"><span>Та же лампа, 1938</span></button></li>
+        <li data-era="alexey" data-reveal><button type="button" data-full="img/okno-sneg.jpg"><img src="img/okno-sneg.jpg" alt="Окно купе, за ним ночные ели в снегу" width="1600" height="900" loading="lazy"><span>За окном ночь и ели, 1938</span></button></li>
+        <li data-era="vera" data-reveal><button type="button" data-full="img/titan.jpg"><img src="img/titan.jpg" alt="Медный титан для кипятка в служебном купе" width="1600" height="900" loading="lazy"><span>Титан, 1913</span></button></li>
+        <li data-era="alexey" data-reveal><button type="button" data-full="img/era-1938-dver.jpg"><img src="img/era-1938-dver.jpg" alt="Промёрзшее служебное купе, 1938" width="1600" height="900" loading="lazy"><span>Служебное купе, 1938</span></button></li>
+        <li data-era="vera" data-reveal><button type="button" data-full="img/era-1913-dver.jpg"><img src="img/era-1913-dver.jpg" alt="Тёплое служебное купе, 1913" width="1600" height="900" loading="lazy"><span>Служебное купе, 1913</span></button></li>
+        <li data-era="alexey" data-reveal><button type="button" data-full="img/era-1938-vagon.jpg"><img src="img/era-1938-vagon.jpg" alt="Пассажирское купе в 1938 году: снег на диванах, сосульки" width="1600" height="900" loading="lazy"><span>Пассажирское купе, 1938</span></button></li>
+        <li data-era="vera" data-reveal><button type="button" data-full="img/menu.jpg"><img src="img/menu.jpg" alt="Главное меню игры на фоне купе" width="1600" height="900" loading="lazy"><span>Главное меню</span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="who" id="who">
+    <div class="wrap who__grid">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow"><span class="num">VIII</span>Для кого</p>
+        <h2>Кому садиться в&nbsp;этот поезд</h2>
+      </div>
+      <ul class="who__list">
+        <li data-reveal><h3>Парам</h3><p>Вечер вдвоём, где без каждого не&nbsp;обойтись.</p></li>
+        <li data-reveal><h3>Любителям квест-комнат</h3><p>Тот&nbsp;же азарт поиска и&nbsp;догадок, только дома и&nbsp;в&nbsp;своём темпе.</p></li>
+        <li data-reveal><h3>Фанатам асимметричных кооперативов</h3><p>У&nbsp;каждого своя половина картины, и&nbsp;сложить её можно только словами.</p></li>
+        <li data-reveal><h3>Любителям детективов и&nbsp;истории</h3><p>Вагон 1913 и&nbsp;1938 годов, находки и&nbsp;история, которую надо собрать самим.</p></li>
+        <li data-reveal><h3>Стримерам</h3><p>Два экрана и&nbsp;живой разговор: зрителю видно обе половины, игрокам&nbsp;— только свою.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rail-divider" aria-hidden="true"><span><svg><use href="#i-star"/></svg></span></div>
+
+  <section class="press" id="press">
+    <div class="wrap">
+      <p class="eyebrow press__eyebrow" data-reveal><span class="num">IX</span>Билет для издателей</p>
+      <div class="ticket" data-reveal>
+        <div class="ticket__main">
+          <p class="ticket__road">Ночной экспресс · вагон служебный</p>
+          <h2 class="ticket__title">Северная звезда</h2>
+          <dl class="ticket__rows">
+            <div><dt>Жанр</dt><dd>Кооперативная мистико-детективная головоломка</dd></div>
+            <div><dt>Игроки</dt><dd>2, у каждого свой Android-телефон</dd></div>
+            <div><dt>Длительность</dt><dd>12 глав по 30–40 минут и эпилог, около 6–8 часов</dd></div>
+            <div><dt>Связь</dt><dd>Одна Wi-Fi-сеть или раздача с телефона</dd></div>
+            <div><dt>Графика</dt><dd>Реалистичная 3D, Unity</dd></div>
+            <div><dt>Язык</dt><dd>Русский</dd></div>
+          </dl>
+          <svg class="ticket__stamp" viewBox="0 0 220 90" aria-hidden="true"><rect x="4" y="4" width="212" height="82" rx="8" fill="none" stroke-width="4"/><rect x="12" y="12" width="196" height="66" rx="4" fill="none" stroke-width="1.5"/><text x="110" y="42" text-anchor="middle" font-size="20" letter-spacing="2">ПРОВЕРЕНО</text><text x="110" y="66" text-anchor="middle" font-size="13" letter-spacing="3">КОНДУКТОРОМ</text></svg>
+        </div>
+        <div class="ticket__stub" aria-hidden="true">
+          <span class="ticket__punch"></span><span class="ticket__punch"></span>
+          <span class="ticket__from">1913</span>
+          <span class="ticket__arrow">↓</span>
+          <span class="ticket__to">1938</span>
+          <span class="ticket__seats">мест: 2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <span class="foot__name"><svg><use href="#i-star"/></svg>Северная звезда</span>
+    <span>Кооперативная головоломка для Android · 2026</span>
+    <a href="#top">Наверх</a>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Увеличенный кадр">
+  <button type="button" class="lightbox__close" aria-label="Закрыть">×</button>
+  <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="Предыдущий кадр">‹</button>
+  <figure class="lightbox__fig frame"><img alt=""><figcaption></figcaption></figure>
+  <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="Следующий кадр">›</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
